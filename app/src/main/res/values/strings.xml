@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name"><u><b><i>TASK</i></b></u></string>
+    <string name="action_settings">Settings</string>
+    <string name="server_client_id">583112862242-kes00kg47nfn3bir45vdmai2u0u31igt.apps.googleusercontent.com</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="desc_google_icon">Google Logo</string>
+    <string name="signed_out">Signed out</string>
+    <string name="title_text">Google Sign-In\nQuickstart</string>
+</resources>

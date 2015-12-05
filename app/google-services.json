@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_id": "task-c2495",
+    "project_number": "583112862242",
+    "name": "TASK"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583112862242:android:e42a65819e71fd4f",
+        "client_id": "android:com.example.administrator.task",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.example.administrator.task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583112862242-8jm2dq2mvnlcfjia38mvvvar4ruanfp1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.administrator.task",
+            "certificate_hash": "D213907F4AF11AF59372899ECC6B90114E5D84C3"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
