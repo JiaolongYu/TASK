@@ -11,4 +11,6 @@
     <string name="title_activity_manage">ManageActivity</string>
     <string name="common_task"><b>Common Task</b></string>
     <string name="private_task"><b>Private Task</b></string>
+    <string name="tasktype">Please choose task type</string>
+    <string name="title_activity_create_private_task">CreatePrivateTask</string>
 </resources>

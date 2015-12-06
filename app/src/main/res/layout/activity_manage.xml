@@ -6,6 +6,7 @@
     android:layout_height="fill_parent"
     android:scrollbars="vertical"
     android:background="@color/themecolor"
+
     >
 
     <LinearLayout
@@ -13,12 +14,15 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
+
         tools:context=".ManageActivity">
 
         <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:paddingTop="100dp"
+            android:id="@+id/CommonTask"
             android:layout_width="@dimen/task_table_width"
             android:layout_height="wrap_content"
+
             android:stretchColumns="1">
             <TableRow
                 android:background="@color/blue_grey_700">
@@ -29,6 +33,7 @@
                     android:padding="3dip" />
                 <TextView
                     android:text="MORE"
+                    android:id="@+id/Cmore"
                     android:gravity="right"
                     android:clickable="true"
                     android:padding="3dip" />
@@ -37,6 +42,7 @@
             <TableRow
                 android:background="@color/blue_grey_600">
                 <TextView
+                    android:id="@+id/Ctask1"
                     android:text="no task"
                     android:textSize="23sp"
                     android:textColor="#FFFFFF"
@@ -47,6 +53,8 @@
         <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:paddingTop="50dp"
             android:layout_width="@dimen/task_table_width"
+            android:id="@+id/PrivateTask"
+            android:paddingBottom="50sp"
             android:layout_height="wrap_content"
             android:stretchColumns="1">
             <TableRow
@@ -64,8 +72,10 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/PTR1"
                 android:background="@color/blue_grey_600">
                 <TextView
+                    android:id="@+id/Ptask1"
                     android:text="no task"
                     android:textSize="23sp"
                     android:textColor="#FFFFFF"
@@ -73,21 +83,33 @@
             </TableRow>
         </TableLayout>
 
+        <Button
+            android:id="@+id/CreateTask"
+            android:background="#2b6378"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Creat New Task"
+            android:textColor="#ffffff"
+            android:layout_weight="1"
+            android:enabled="false" />
+
         <TextView
             android:id="@+id/managedebug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dip"
-            android:paddingTop="60sp"
+            android:paddingTop="40sp"
             android:textSize="30sp"
             android:text="User" />
 
         <Button
             android:id="@+id/manage_sign_out"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="sign-out"
-            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:background="#2b6378"
+
             android:enabled="false" />
 
     </LinearLayout>>

@@ -268,7 +268,6 @@ public class MainActivity extends ActionBarActivity implements
         mStatus.setText(email + " is currently Signed In");
         Intent intent= new Intent(this, ManageActivity.class);
         Bundle bundle=new Bundle();
-//        System.out.println("email:"+email);
         bundle.putString("account", email);
         intent.putExtras(bundle);
         startActivity(intent);
