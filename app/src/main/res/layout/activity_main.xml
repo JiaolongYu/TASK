@@ -12,23 +12,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".Homepage">
-
+        tools:context=".MainActivity">
 
 
 
 
         <TextView
-            android:background="@color/themecolor"
             android:text="@string/app_name"
             android:layout_width="fill_parent"
-            android:layout_height="@dimen/g_top_margin"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="60sp"
+            android:textSize="40sp"
             android:textColor="#FFFFFF"
-            android:paddingBottom = "40sp"
+            android:paddingBottom = "20sp"
+            android:paddingTop = "200sp"
+            />
+        <TextView
+            android:text="@string/app_slogen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:paddingBottom = "150sp"
             />
 
+        <!--<Button-->
+            <!--android:id="@+id/view_all_images"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="View All Stream"-->
+            <!--android:onClick="viewAllImages"-->
+            <!--android:enabled="false"-->
+            <!--/>-->
+
+        <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="upload"-->
+        <!--android:clickable="false"-->
+        <!--android:id="@+id/open_image_upload_page"/>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,21 +67,20 @@
                 android:enabled="false" />
 
             <Button
-                android:id="@+id/sign_out_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="sign-out"
-                android:layout_weight="1"
-                android:background="@color/blue_grey_700"
-                android:enabled="false" />
+            android:id="@+id/sign_out_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sign-out"
+            android:layout_weight="1"
+            android:enabled="false" />
 
             <!--<Button-->
-                <!--android:id="@+id/revoke_access_button"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="revoke"-->
-                <!--android:layout_weight="1"-->
-                <!--android:enabled="false" />-->
+            <!--android:id="@+id/revoke_access_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="revoke"-->
+            <!--android:layout_weight="1"-->
+            <!--android:enabled="false" />-->
 
         </LinearLayout>
         <TextView
@@ -66,8 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dip"
+            android:paddingTop="60sp"
             android:text="signed out" />
-
     </LinearLayout>
 </ScrollView>
-

@@ -79,7 +79,7 @@ public class MainActivity extends ActionBarActivity implements
 
     private SignInButton mSignInButton;
     private Button mSignOutButton;
-    private Button mRevokeButton;
+//    private Button mRevokeButton;
     private TextView mStatus;
 
     Context context = this;
@@ -87,6 +87,8 @@ public class MainActivity extends ActionBarActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        String instruction = intent.getStringExtra("instruct");
 
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
         mSignOutButton = (Button) findViewById(R.id.sign_out_button);
@@ -98,7 +100,7 @@ public class MainActivity extends ActionBarActivity implements
         // Button listeners
         mSignInButton.setOnClickListener(this);
         mSignOutButton.setOnClickListener(this);
-        mRevokeButton.setOnClickListener(this);
+//        mRevokeButton.setOnClickListener(this);
 
         if (savedInstanceState != null) {
             mSignInProgress = savedInstanceState
@@ -107,6 +109,32 @@ public class MainActivity extends ActionBarActivity implements
 
 
         mGoogleApiClient = buildGoogleApiClient();
+//        System.out.println("instruction:"+instruction);
+
+//        if(instruction != null) {
+//            if (!mGoogleApiClient.isConnecting()) {
+//                // We only process button clicks when GoogleApiClient is not transitioning
+//                // between connected and not connected.
+//                if (!isOnline()) {
+//                    Toast.makeText(getApplicationContext(),
+//                            "You need internet access to perform this action.", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//
+//                while(mSignInProgress != STATE_DEFAULT);
+//
+//                System.out.println("Client"+Plus.AccountApi.getAccountName(mGoogleApiClient));
+//                Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
+//                Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+//                mGoogleApiClient.disconnect();
+//
+////                mGoogleApiClient.connect();
+//                email = null;
+//                Toast.makeText(getApplicationContext(), "You are now signed out", Toast.LENGTH_SHORT).show();
+//                login_msg_shown = false;
+//            }
+//
+//        }
     }
 
     private void setGooglePlusButtonText(SignInButton signInButton, String buttonText) {
@@ -189,13 +217,13 @@ public class MainActivity extends ActionBarActivity implements
                     login_msg_shown = false;
                     break;
 //                case R.id.revoke_access_button:
-                    // After we revoke permissions for the user with a GoogleApiClient
-                    // instance, we must discard it and create a new one.
+//                    // After we revoke permissions for the user with a GoogleApiClient
+//                    // instance, we must discard it and create a new one.
 //                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                    // Our sample has caches no user data from Google+, however we
-                    // would normally register a callback on revokeAccessAndDisconnect
-                    // to delete user data so that we comply with Google developer
-                    // policies.
+//                    // Our sample has caches no user data from Google+, however we
+//                    // would normally register a callback on revokeAccessAndDisconnect
+//                    // to delete user data so that we comply with Google developer
+//                    // policies.
 //                    Plus.AccountApi.revokeAccessAndDisconnect(mGoogleApiClient);
 //                    mGoogleApiClient = buildGoogleApiClient();
 //                    mGoogleApiClient.connect();
@@ -225,7 +253,7 @@ public class MainActivity extends ActionBarActivity implements
         // Update the user interface to reflect that the user is signed in.
         mSignInButton.setEnabled(false);
         mSignOutButton.setEnabled(true);
-        mRevokeButton.setEnabled(true);
+//        mRevokeButton.setEnabled(true);
 //        Button uploadButton = (Button) findViewById(R.id.view_all_images);
 //        uploadButton.setEnabled(true);
 
@@ -238,6 +266,12 @@ public class MainActivity extends ActionBarActivity implements
 
 
         mStatus.setText(email + " is currently Signed In");
+        Intent intent= new Intent(this, ManageActivity.class);
+        Bundle bundle=new Bundle();
+//        System.out.println("email:"+email);
+        bundle.putString("account", email);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
 
 
@@ -337,6 +371,7 @@ public class MainActivity extends ActionBarActivity implements
                     // If the error resolution was successful we should continue
                     // processing errors.
                     mSignInProgress = STATE_SIGN_IN;
+
                 } else {
                     // If the error resolution was not successful or the user canceled,
                     // we should stop processing errors.
@@ -356,7 +391,7 @@ public class MainActivity extends ActionBarActivity implements
         // Update the UI to reflect that the user is signed out.
         mSignInButton.setEnabled(true);
         mSignOutButton.setEnabled(false);
-        mRevokeButton.setEnabled(false);
+//        mRevokeButton.setEnabled(false);
 //        Button uploadButton = (Button) findViewById(R.id.view_all_images);
 //        uploadButton.setEnabled(false);
 
@@ -378,13 +413,13 @@ public class MainActivity extends ActionBarActivity implements
         mGoogleApiClient.connect();
     }
 
-    public void viewAllImages(View view){
-        Intent intent= new Intent(this, MainActivity.class);
-        Bundle bundle=new Bundle();
-        bundle.putString("account", email);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
+//    public void viewAllImages(View view){
+//        Intent intent= new Intent(this, ManageActivity.class);
+//        Bundle bundle=new Bundle();
+//        bundle.putString("account", email);
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+//    }
 
 
 }
