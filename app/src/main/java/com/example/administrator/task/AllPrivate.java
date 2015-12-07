@@ -55,12 +55,16 @@ public class AllPrivate extends ActionBarActivity {
 
                     JSONObject jObject = new JSONObject(new String(response));
                     JSONArray PrivateTask;
+                    JSONArray PrivateTaskID;
                     ArrayList<String> PTask = new ArrayList<String>();
+                    final ArrayList<Integer> PTaskID = new ArrayList<Integer>();
                     PrivateTask = jObject.getJSONArray("pritaskname");
+                    PrivateTaskID =jObject.getJSONArray("pritaskid");
                     System.out.println(PrivateTask.length());
 
                     for (int i = 0; i < PrivateTask.length(); i++) {
                         PTask.add(PrivateTask.getString(i));
+                        PTaskID.add(PrivateTaskID.getInt(i));
                     }
 
                     listView = (ListView)findViewById(R.id.Tasklist);
@@ -89,6 +93,12 @@ public class AllPrivate extends ActionBarActivity {
                                 }
                             }else{
                                 Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(context, com.example.administrator.task.SinglePrivateTask.class);
+                                Bundle bundle=new Bundle();
+                                int P = position;
+                                bundle.putInt("PTaskID", PTaskID.get(P));
+                                intent.putExtras(bundle);
+                                startActivity(intent);
                             }
                         }
                     };

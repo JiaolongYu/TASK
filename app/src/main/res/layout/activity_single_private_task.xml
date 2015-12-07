@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,6 +7,111 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/themecolor"
+    android:orientation="vertical"
     tools:context="com.example.administrator.task.SinglePrivateTask">
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/ptaskname"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:textSize="40sp"
+            android:textColor="@color/orange"
+            android:text="Task Name" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mode_edit_white_18dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:paddingRight="20dp"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:text="Deadline:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ptaskdue"
+            android:layout_marginBottom="20dip"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:text="due" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:paddingRight="20dp"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:text="Description:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ptaskdescript"
+            android:layout_marginBottom="20dip"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:text="description" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:paddingRight="20dp"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:text="Create time:" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ptaskcreatetime"
+            android:layout_marginBottom="20dip"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:text="create time" />
+
+    </LinearLayout>
+
+</LinearLayout>

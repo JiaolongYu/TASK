@@ -37,7 +37,7 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
 
     String accountName;
     String PTaskName;
-    String PTaskDiscription;
+    String PTaskDescription;
     String PTaskDue;
     Integer PTaskID;
 //    String PTaskCreateTime;
@@ -65,17 +65,17 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
     public void onClick(View v) {
         EditText TaskName =(EditText)findViewById(R.id.taskname);
         EditText TaskDue = (EditText)findViewById(R.id.taskdue);
-        EditText TaskDiscription = (EditText)findViewById(R.id.taskdiscrip);
+        EditText TaskDescription = (EditText)findViewById(R.id.taskdiscrip);
 
         PTaskName = TaskName.getText().toString();
         PTaskDue = TaskDue.getText().toString();
-        PTaskDiscription = TaskDiscription.getText().toString();
+        PTaskDescription = TaskDescription.getText().toString();
         PTaskID = (PTaskName+accountName).hashCode();
 
         RequestParams params = new RequestParams();
         params.put("taskname", PTaskName);
         params.put("creator", accountName);
-        params.put("description", PTaskDiscription);
+        params.put("description", PTaskDescription);
         params.put("due", PTaskDue);
         params.put("taskid",PTaskID);
         AsyncHttpClient client = new AsyncHttpClient();
