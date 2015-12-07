@@ -12,49 +12,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.plus.Plus;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-
-public class CreatePrivateTask extends ActionBarActivity implements View.OnClickListener{
+public class CreateCommonTask extends ActionBarActivity implements View.OnClickListener{
     Context context = this;
     protected GoogleApiClient mGoogleApiClient;
 
     String accountName;
-    String PTaskName;
-    String PTaskDescription;
-    String PTaskDue;
-    Integer PTaskID;
-//    String PTaskCreateTime;
-//    Integer PTaskFinished;
+    String CTaskName;
+    String CTaskDescription;
+    String CTaskDue;
+    Integer CTaskID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_private_task);
+        setContentView(R.layout.activity_create_common_task);
 
 
         Intent intent = getIntent();
         accountName = intent.getStringExtra("account");
-        TextView User = (TextView)findViewById(R.id.createPdebug);
+        TextView User = (TextView)findViewById(R.id.createCdebug);
         User.setText(accountName);
 
 
-        Button mCreate = (Button)findViewById(R.id.createP);
+        Button mCreate = (Button)findViewById(R.id.createC);
         mCreate.setOnClickListener(this);
 
 
@@ -67,19 +51,19 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
         EditText TaskDue = (EditText)findViewById(R.id.taskdue);
         EditText TaskDescription = (EditText)findViewById(R.id.taskdiscrip);
 
-        PTaskName = TaskName.getText().toString();
-        PTaskDue = TaskDue.getText().toString();
-        PTaskDescription = TaskDescription.getText().toString();
-        PTaskID = (PTaskName+accountName).hashCode();
+        CTaskName = TaskName.getText().toString();
+        CTaskDue = TaskDue.getText().toString();
+        CTaskDescription = TaskDescription.getText().toString();
+        CTaskID = (CTaskName+accountName).hashCode();
 
         RequestParams params = new RequestParams();
-        params.put("taskname", PTaskName);
+        params.put("taskname", CTaskName);
         params.put("creator", accountName);
-        params.put("description", PTaskDescription);
-        params.put("due", PTaskDue);
-        params.put("taskid",PTaskID);
+        params.put("description", CTaskDescription);
+        params.put("due", CTaskDue);
+        params.put("taskid", CTaskID);
         AsyncHttpClient client = new AsyncHttpClient();
-        client.post("http://task-1123.appspot.com/createprivatetask", params, new AsyncHttpResponseHandler() {
+        client.post("http://task-1123.appspot.com/createcommontask", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] response) {
                 Log.w("async", "success!!!!");
@@ -97,6 +81,7 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
+
 
         Intent intent= new Intent(this, ManageActivity.class);
         Bundle bundle=new Bundle();

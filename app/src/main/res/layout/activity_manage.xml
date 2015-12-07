@@ -18,7 +18,7 @@
         tools:context=".ManageActivity">
 
         <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:paddingTop="100dp"
+            android:paddingTop="50dp"
             android:id="@+id/CommonTask"
             android:layout_width="@dimen/task_table_width"
             android:layout_height="wrap_content"
@@ -40,6 +40,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/CTR1"
                 android:background="@color/blue_grey_600">
                 <TextView
                     android:id="@+id/Ctask1"

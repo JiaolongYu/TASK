@@ -50,6 +50,10 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
     private GoogleApiClient mGoogleApiClient;
     boolean mSignInClicked;
     Context context = this;
+    ArrayList<String> PTask = new ArrayList<String>();
+    ArrayList<Integer> PTaskid =new ArrayList<Integer>();
+    ArrayList<String> CTask = new ArrayList<String>();
+    ArrayList<Integer> CTaskid = new ArrayList<Integer>();
 
 
     @Override
@@ -73,6 +77,10 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
             Button mSignout = (Button) findViewById(R.id.manage_sign_out);
             Button mCreate = (Button) findViewById(R.id.CreateTask);
             TextView mMore = (TextView) findViewById(R.id.Pmore);
+            final TableRow PTRR = (TableRow)findViewById(R.id.PTR1);
+            final TableRow CTRR = (TableRow)findViewById(R.id.CTR1);
+            PTRR.setOnClickListener(ManageActivity.this);
+            CTRR.setOnClickListener(ManageActivity.this);
             mMore.setOnClickListener(this);
             mCreate.setEnabled(true);
             mCreate.setOnClickListener(this);
@@ -80,6 +88,7 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
             mSignout.setOnClickListener(this);
 
             final TableLayout PTaskTable = (TableLayout)findViewById(R.id.PrivateTask);
+            final TableLayout CTaskTable = (TableLayout)findViewById(R.id.CommonTask);
             //----get TASK data from server
 
             final String request_url = "http://task-1123.appspot.com/viewmytask?userid="+accountName;
@@ -92,62 +101,115 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                     try {
 
                         JSONObject jObject = new JSONObject(new String(response));
-                        JSONArray CommonTask;
-                        JSONArray PrivateTask;
-//                        ArrayList<String> CTask = new ArrayList<String>();
-//                        ArrayList<String> PTask;
-//                        CommonTask = jObject.getJSONArray("taskname");
-                        PrivateTask = jObject.getJSONArray("pritaskname");
+                        JSONArray CommonTask = new JSONArray();
+                        JSONArray CommonTaskId = new JSONArray();
+                        JSONArray PrivateTask = new JSONArray();
+                        JSONArray PrivateTaskId = new JSONArray();
+
+                        System.out.println(jObject.isNull("taskname"));
+                        System.out.println(jObject.isNull("pritaskname"));
+
+                        if(!jObject.isNull("taskname")){
+                            CommonTask = jObject.getJSONArray("taskname");
+                            CommonTaskId =jObject.getJSONArray("taskid");
+                        }
+
+                        if(!jObject.isNull("pritaskname")) {
+                            PrivateTask = jObject.getJSONArray("pritaskname");
+                            PrivateTaskId = jObject.getJSONArray("pritaskid");
+                        }
+
                         int tasknum;
 
-//                        if(CommonTask.length()>0 && CommonTask.length()<3){
-//                            tasknum = CommonTask.length();
-//                        }
-//                        else tasknum = 3;
-//                        TableLayout CTaskTable = (TableLayout)findViewById(R.id.CommonTask);
-
-//                        for(int i = 0; i < tasknum; i++){
-//                            if(i == 0){
-//                                TextView CT1 = (TextView)findViewById(R.id.Ctask1);
-//                                CT1.setText(CommonTask.getString(i));
-//                            }else{
-//                                TextView CT2 = new TextView(ManageActivity.this);
-//                                CT2.setText(CommonTask.getString(i));
-//                                CT2.setTextColor(0xFFFFFF);
-//                                CT2.setTextSize(23);
-//                                TableRow CTR = new TableRow(ManageActivity.this);
-//                                CTR.addView(CT2);
-//                                CTaskTable.addView(CTR);
-//                            }
-//                        }
-
-                        if(PrivateTask.length()>0 && PrivateTask.length()<3){
+                        if(CommonTask.length()>=0 && CommonTask.length()<3){
+                            tasknum = CommonTask.length();
+                        }
+                        else tasknum = 3;
+                        System.out.println("Common show task number: "+tasknum);
+                        for(int i = 0; i < tasknum; i++){
+                            CTask.add(CommonTask.getString(i));
+                            CTaskid.add(CommonTaskId.getInt(i));
+                        }
+                        if(PrivateTask.length()>=0 && PrivateTask.length()<3){
                             tasknum = PrivateTask.length();
                         }else tasknum = 3;
-                        System.out.println(tasknum);
-
+                        System.out.println("Private show task number: "+tasknum);
                         for(int i = 0; i < tasknum; i++){
-                            if(i == 0){
-                                TextView PT1 = (TextView)findViewById(R.id.Ptask1);
-                                PT1.setText(PrivateTask.getString(i));
-                            }else{
-                                System.out.println("here");
-                                TableRow PTR = new TableRow(context);
-                                TableRow PTRR = (TableRow)findViewById(R.id.PTR1);
-
-                                PTR.setBackground(PTRR.getBackground());
-                                TextView PT2 = new TextView(context);
-//                                PT2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-                                PT2.setText(PrivateTask.getString(i));
-                                PT2.setTextColor(Color.WHITE);
-                                PT2.setTextSize(23);
-                                PTR.addView(PT2);
-                                PTaskTable.addView(PTR);
-                                System.out.println("there");
-                            }
+                            PTask.add(PrivateTask.getString(i));
+                            PTaskid.add(PrivateTaskId.getInt(i));
                         }
                     } catch (JSONException j) {
                         System.out.println("JSON Error");
+                    }
+
+                    for(int i = 0; i < CTask.size(); i++){
+                        if(i == 0){
+                            TextView CT1 = (TextView)findViewById(R.id.Ctask1);
+                            CT1.setText(CTask.get(i));
+                            CT1.setPadding(0, 0, 0, 0);
+                            CTRR.setPadding(0,0,0,0);
+
+                        }else{
+                            TableRow CTR;
+                            try{
+                                CTR = (TableRow)findViewById(100+i);
+                                TextView CT2 = new TextView(context);
+                                CT2.setText(CTask.get(i));
+                                CT2.setTextColor(Color.WHITE);
+                                CT2.setTextSize(23);
+                                CTR.addView(CT2);
+                            }catch (Exception e){
+                                CTR = new TableRow(context);
+                                CTR.setBackground(CTRR.getBackground());
+                                CTR.setId(i + 200);
+
+                                CTR.setOnClickListener(ManageActivity.this);
+                                TextView CT2 = new TextView(context);
+                                CT2.setText(CTask.get(i));
+                                CT2.setTextColor(Color.WHITE);
+                                CT2.setTextSize(23);
+                                CT2.setPadding(0, 0, 0, 0);
+                                CTR.addView(CT2);
+                                CTR.setPadding(0,0,0,0);
+                                CTaskTable.addView(CTR);
+                            }
+
+                        }
+                    }
+
+                    for(int i = 0; i < PTask.size(); i++){
+                        if(i == 0){
+                            TextView PT1 = (TextView)findViewById(R.id.Ptask1);
+                            PT1.setText(PTask.get(i));
+                            PT1.setPadding(0, 0, 0, 0);
+                            PTRR.setPadding(0,0,0,0);
+
+                        }else{
+                            TableRow PTR;
+                            try{
+                                PTR = (TableRow)findViewById(100+i);
+                                TextView PT2 = new TextView(context);
+                                PT2.setText(PTask.get(i));
+                                PT2.setTextColor(Color.WHITE);
+                                PT2.setTextSize(23);
+                                PTR.addView(PT2);
+                            }catch (Exception e){
+                                PTR = new TableRow(context);
+                                PTR.setBackground(PTRR.getBackground());
+                                PTR.setId(i + 100);
+
+                                PTR.setOnClickListener(ManageActivity.this);
+                                TextView PT2 = new TextView(context);
+                                PT2.setText(PTask.get(i));
+                                PT2.setTextColor(Color.WHITE);
+                                PT2.setTextSize(23);
+                                PT2.setPadding(0, 0, 0, 0);
+                                PTR.addView(PT2);
+                                PTR.setPadding(0,0,0,0);
+                                PTaskTable.addView(PTR);
+                            }
+
+                        }
                     }
 
                 }
@@ -191,6 +253,35 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 bundle.putString("account", accountName);
                 intent.putExtras(bundle);
                 startActivity(intent);
+                break;
+            case R.id.PTR1:
+                intent= new Intent(this, SinglePrivateTask.class);
+                bundle=new Bundle();
+                bundle.putInt("PTaskID", PTaskid.get(0));
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            case 101:
+                intent= new Intent(this, SinglePrivateTask.class);
+                bundle=new Bundle();
+                bundle.putInt("PTaskID",PTaskid.get(1));
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            case 102:
+                intent= new Intent(this, SinglePrivateTask.class);
+                bundle=new Bundle();
+                bundle.putInt("PTaskID",PTaskid.get(2));
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            case 201:
+                break;
+            case 202:
+                break;
+            case R.id.CTR1:
+                break;
+
         }
 
 
@@ -244,7 +335,11 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
             builder.setMessage(R.string.tasktype)
                     .setPositiveButton(R.string.common_task, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // FIRE ZE MISSILES!
+                            Intent intent = new Intent(getActivity(), com.example.administrator.task.CreateCommonTask.class);
+                            Bundle bundle=new Bundle();
+                            bundle.putString("account", accountName);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
                         }
                     })
 
@@ -275,6 +370,11 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
             nButton.setBackgroundColor(getResources().getColor(R.color.dialogcolor));
             nButton.setTextColor(getResources().getColor(R.color.white));
         }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
     }
 
 }

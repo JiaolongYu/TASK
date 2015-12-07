@@ -24,8 +24,9 @@ public class SinglePrivateTask extends ActionBarActivity {
 
         Intent intent = getIntent();
         int TaskId = intent.getIntExtra("PTaskID", 0);
+        System.out.println(TaskId);
 
-        final String request_url = "http://task-1123.appspot.com/viewmytask?taskid="+TaskId;
+        final String request_url = "http://task-1123.appspot.com/viewsingleprivatetask?taskid="+TaskId;
         AsyncHttpClient httpClient = new AsyncHttpClient();
         httpClient.get(request_url, new AsyncHttpResponseHandler() {
             @Override
@@ -42,10 +43,14 @@ public class SinglePrivateTask extends ActionBarActivity {
 //                        ArrayList<String> CTask = new ArrayList<String>();
 //                        ArrayList<String> PTask;
 //                        CommonTask = jObject.getJSONArray("taskname");
-                    PTaskname = jObject.getJSONArray("taskname").get(0).toString();
-                    PTaskdue = jObject.getJSONArray("due").get(0).toString();
-                    PTaskdescription = jObject.getJSONArray("description").get(0).toString();
-                    PTaskcreatetime = jObject.getJSONArray("create_time").get(0).toString();
+//                    System.out.println("here before Ptaskname");
+                    PTaskname = jObject.getJSONArray("taskname").getString(0);
+//                    System.out.println("here after Ptaskname");
+                    PTaskdue = jObject.getJSONArray("due").getString(0);
+                    PTaskdescription = jObject.getJSONArray("description").getString(0);
+//                    System.out.println("here after Ptaskdescription");
+                    PTaskcreatetime = jObject.getJSONArray("create_time").getString(0);
+//                    System.out.println("here after createtime");
                     TextView ptaskname = (TextView)findViewById(R.id.ptaskname);
                     TextView ptaskdue = (TextView)findViewById(R.id.ptaskdue);
                     TextView ptaskdescription = (TextView)findViewById(R.id.ptaskdescript);
