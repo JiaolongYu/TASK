@@ -34,7 +34,13 @@
             android:label="@string/title_activity_manage" />
         <activity
             android:name=".CreatePrivateTask"
-            android:label="@string/title_activity_create_private_task"></activity>
+            android:label="@string/title_activity_create_private_task" />
+        <activity
+            android:name=".AllPrivate"
+            android:label="@string/title_activity_all_private" />
+        <activity
+            android:name=".SinglePrivateTask"
+            android:label="@string/title_activity_single_private_task"></activity>
     </application>
 
 </manifest>

@@ -66,6 +66,7 @@
                     android:padding="3dip" />
                 <TextView
                     android:text="MORE"
+                    android:id="@+id/Pmore"
                     android:gravity="right"
                     android:clickable="true"
                     android:padding="3dip" />

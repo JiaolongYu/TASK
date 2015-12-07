@@ -72,6 +72,8 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
             mDebug.setText(accountName);
             Button mSignout = (Button) findViewById(R.id.manage_sign_out);
             Button mCreate = (Button) findViewById(R.id.CreateTask);
+            TextView mMore = (TextView) findViewById(R.id.Pmore);
+            mMore.setOnClickListener(this);
             mCreate.setEnabled(true);
             mCreate.setOnClickListener(this);
             mSignout.setEnabled(true);
@@ -139,20 +141,11 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                                 PT2.setText(PrivateTask.getString(i));
                                 PT2.setTextColor(Color.WHITE);
                                 PT2.setTextSize(23);
-//                                PT2.setPadding(3, 3, 3, 3);
-
-//                                PTR.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT));
-
                                 PTR.addView(PT2);
                                 PTaskTable.addView(PTR);
                                 System.out.println("there");
                             }
                         }
-
-
-
-
-
                     } catch (JSONException j) {
                         System.out.println("JSON Error");
                     }
@@ -191,6 +184,13 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 newFragment.show(getSupportFragmentManager(), "CREATE");
 //                Dialog CreateDialog = newFragment.getDialog();
 //                Button positiveButton = CreateDialog.getActionBar(DialogInterface.BUTTON_POSITIVE);
+                break;
+            case R.id.Pmore:
+                Intent intent= new Intent(this, AllPrivate.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("account", accountName);
+                intent.putExtras(bundle);
+                startActivity(intent);
         }
 
 
