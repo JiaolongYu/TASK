@@ -37,7 +37,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemClickListener, View.OnClickListener,
+public class AllCommon extends ActionBarActivity implements AdapterView.OnItemClickListener, View.OnClickListener,
         OnSlideListener {
     String accountName;
     private ListView listView;
@@ -58,7 +58,7 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_private);
+        setContentView(R.layout.activity_all_common);
 
         Intent intentstream = getIntent();
         accountName = intentstream.getStringExtra("account");
@@ -79,8 +79,8 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
                     JSONArray PrivateTask;
                     JSONArray PrivateTaskID;
 
-                    PrivateTask = jObject.getJSONArray("pritaskname");
-                    PrivateTaskID =jObject.getJSONArray("pritaskid");
+                    PrivateTask = jObject.getJSONArray("taskname");
+                    PrivateTaskID =jObject.getJSONArray("taskid");
                     System.out.println(PrivateTask.length());
 
                     for (int i = 0; i < PrivateTask.length(); i++) {
@@ -95,7 +95,7 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
                         mMessageItems.add(item);
                     }
                     mListView.setAdapter(new SlideAdapter(mMessageItems));
-                    mListView.setOnItemClickListener(AllPrivate.this);
+                    mListView.setOnItemClickListener(AllCommon.this);
 
 
 
@@ -144,11 +144,11 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
             if (slideView == null) {
                 View itemView = this.mInflater.inflate(R.layout.list_item, null);
 
-                slideView = new SlideView(AllPrivate.this);
+                slideView = new SlideView(AllCommon.this);
                 slideView.setContentView(itemView);
 
                 holder = new ViewHolder(slideView);
-                slideView.setOnSlideListener(AllPrivate.this);
+                slideView.setOnSlideListener(AllCommon.this);
                 slideView.setTag(holder);
             } else {
                 holder = (ViewHolder) slideView.getTag();
@@ -161,8 +161,8 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
 //            holder.title.setText(item.title);
             holder.msg.setText(item.msg);
 //            holder.time.setText(item.time);
-            holder.deleteHolder.setOnClickListener(AllPrivate.this);
-            holder.finishHolder.setOnClickListener(AllPrivate.this);
+            holder.deleteHolder.setOnClickListener(AllCommon.this);
+            holder.finishHolder.setOnClickListener(AllCommon.this);
 
             return slideView;
         }
@@ -174,7 +174,7 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
 //        public String title;
         public String msg;
         public String id;
-//        public String time;
+        //        public String time;
         public SlideView slideView;
     }
 
@@ -201,14 +201,14 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         try {
-            Thread.sleep(100);
+            Thread.sleep(500);                 //1000 milliseconds is one second.
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
         if(!mListView.isScroll){
             Log.e(TAG, "onItemClick position=" + position);
             Toast.makeText(context, "click", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(context, com.example.administrator.task.SinglePrivateTask.class);
+            Intent intent = new Intent(context, com.example.administrator.task.SingleCommonTask.class);
             Bundle bundle=new Bundle();
             int P = position;
             bundle.putInt("PTaskID", PTaskID.get(P));
@@ -238,19 +238,20 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
             RequestParams params = new RequestParams();
             params.put("taskid", deletionid);
             AsyncHttpClient client = new AsyncHttpClient();
-            client.post("http://task-1123.appspot.com/deleteprivatetask", params, new AsyncHttpResponseHandler() {
+            client.post("http://task-1123.appspot.com/deletecommontask", params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] response) {
                     Log.w("async", "success!!!!");
                     Toast.makeText(context, "delete Successful", Toast.LENGTH_SHORT).show();
                 }
+
                 @Override
                 public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] errorResponse, Throwable e) {
                     Log.e("Posting_to_blob", "There was a problem in retrieving the url : " + e.toString());
                 }
             });
 
-            Intent intent= new Intent(this, AllPrivate.class);
+            Intent intent= new Intent(this, AllCommon.class);
             Bundle bundle=new Bundle();
             bundle.putString("account", accountName);
             intent.putExtras(bundle);

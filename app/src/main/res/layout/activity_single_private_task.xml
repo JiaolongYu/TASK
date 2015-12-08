@@ -33,6 +33,7 @@
             android:layout_alignParentRight="true"
             android:background="@color/blue"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:src="@drawable/ic_edit_white_18dp"
             />
 
