@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ListView;
+import com.example.administrator.task.MessageItem;
 
 public class ListViewCompat extends ListView {
 
@@ -49,7 +50,7 @@ public class ListViewCompat extends ListView {
                 int position = pointToPosition(x, y);
                 Log.e(TAG, "postion=" + position);
                 if (position != INVALID_POSITION) {
-                    AllCommon.MessageItem data = (AllCommon.MessageItem) getItemAtPosition(position);
+                    MessageItem data = (MessageItem) getItemAtPosition(position);
                     mFocusedItemView = data.slideView;
                     Log.e(TAG, "FocusedItemView=" + mFocusedItemView);
                 }
