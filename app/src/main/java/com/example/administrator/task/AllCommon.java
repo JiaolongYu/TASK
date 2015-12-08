@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.task.SlideView.OnSlideListener;
+import com.example.administrator.task.MessageItem;
 
 
 import com.loopj.android.http.AsyncHttpClient;
