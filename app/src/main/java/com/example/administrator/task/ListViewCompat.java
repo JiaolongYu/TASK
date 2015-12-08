@@ -49,7 +49,7 @@ public class ListViewCompat extends ListView {
                 int position = pointToPosition(x, y);
                 Log.e(TAG, "postion=" + position);
                 if (position != INVALID_POSITION) {
-                    AllPrivate.MessageItem data = (AllPrivate.MessageItem) getItemAtPosition(position);
+                    AllCommon.MessageItem data = (AllCommon.MessageItem) getItemAtPosition(position);
                     mFocusedItemView = data.slideView;
                     Log.e(TAG, "FocusedItemView=" + mFocusedItemView);
                 }

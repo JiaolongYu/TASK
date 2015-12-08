@@ -79,7 +79,7 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
 
         Intent intentstream = getIntent();
-        accountName = intentstream.getStringExtra("account");
+        accountName ="julorwowo@gmail.com";
 //        TextView mDebug = (TextView) findViewById(R.id.managedebug);
 //        mDebug.setText(accountName);
 //        System.out.println("account:"+accountName);
@@ -89,11 +89,13 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
             Button mSignout = (Button) findViewById(R.id.manage_sign_out);
             Button mCreate = (Button) findViewById(R.id.CreateTask);
             TextView mMore = (TextView) findViewById(R.id.Pmore);
+            TextView mCMore = (TextView) findViewById(R.id.Cmore);
             final TableRow PTRR = (TableRow)findViewById(R.id.PTR1);
             final TableRow CTRR = (TableRow)findViewById(R.id.CTR1);
             PTRR.setOnClickListener(ManageActivity.this);
             CTRR.setOnClickListener(ManageActivity.this);
             mMore.setOnClickListener(this);
+            mCMore.setOnClickListener(this);
             mCreate.setEnabled(true);
             mCreate.setOnClickListener(this);
             mSignout.setEnabled(true);
@@ -308,13 +310,13 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
-//            case R.id.Cmore:
-//                intent= new Intent(this, AllCommon.class);
-//                bundle= new Bundle();
-//                bundle.putString("account", accountName);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//                break;
+            case R.id.Cmore:
+                intent= new Intent(this, AllCommon.class);
+                bundle= new Bundle();
+                bundle.putString("account", accountName);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
         }
 
 
