@@ -195,7 +195,7 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         try {
-            Thread.sleep(500);                 //1000 milliseconds is one second.
+            Thread.sleep(100);
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
