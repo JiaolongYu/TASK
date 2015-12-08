@@ -51,6 +51,10 @@
             android:name=".AllCommon"
             android:label="TASK" >
         </activity>
+        <activity
+            android:name=".EditPrivateTask"
+            android:label="@string/title_activity_edit_private_task" >
+        </activity>
     </application>
 
 </manifest>

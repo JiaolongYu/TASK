@@ -18,4 +18,5 @@
     <string name="title_activity_create_common_task">CreateCommonTask</string>
     <string name="title_activity_single_common_task">SingleCommonTask</string>
     <string name="title_activity_all_common">AllCommon</string>
+    <string name="title_activity_edit_private_task">EditPrivateTask</string>
 </resources>
