@@ -10,5 +10,7 @@
     <color name="white">#FFFFFF</color>
     <color name="orange">#fc8107</color>
     <color name="blue">#05cbf7</color>
+    <color name="red">#c41f12</color>
     <color name="yellow_grey">#ccb465</color>
+    <color name="bar">#225370</color>
 </resources>

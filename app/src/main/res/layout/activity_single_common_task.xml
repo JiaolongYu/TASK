@@ -9,34 +9,32 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/themecolor"
     android:orientation="vertical"
-    tools:context="com.example.administrator.task.SinglePrivateTask">
+    tools:context="com.example.administrator.task.SingleCommonTask">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         tools:context=".MainActivity">
 
         <TextView
             android:layout_width="match_parent"
-            android:id="@+id/ptaskname"
+            android:id="@+id/ctaskname"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dip"
-            android:layout_alignParentLeft="true"
             android:textSize="40sp"
             android:textColor="@color/orange"
             android:text="Task Name" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_weight="3"
-            android:layout_alignParentRight="true"
-            android:background="@color/blue"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit_white_18dp"
+            android:src="@drawable/ic_mode_edit_white_18dp"
             />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +54,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ptaskdue"
+            android:id="@+id/ctaskdue"
             android:layout_marginBottom="20dip"
             android:textColor="@color/white"
             android:textSize="30sp"
@@ -82,7 +80,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ptaskdescript"
+            android:id="@+id/ctaskdescript"
             android:layout_marginBottom="20dip"
             android:textColor="@color/white"
             android:textSize="30sp"
@@ -108,7 +106,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ptaskcreatetime"
+            android:id="@+id/ctaskcreatetime"
             android:layout_marginBottom="20dip"
             android:textColor="@color/white"
             android:textSize="30sp"

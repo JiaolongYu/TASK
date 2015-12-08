@@ -2,11 +2,13 @@ package com.example.administrator.task;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -15,6 +17,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.os.Bundle;
@@ -55,11 +59,19 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
     ArrayList<String> CTask = new ArrayList<String>();
     ArrayList<Integer> CTaskid = new ArrayList<Integer>();
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage);
+
+        ActionBar bar = getActionBar();
+        bar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.bar)));
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -276,12 +288,33 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 startActivity(intent);
                 break;
             case 201:
+                intent= new Intent(this, SingleCommonTask.class);
+                bundle=new Bundle();
+                bundle.putInt("CTaskID",CTaskid.get(1));
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             case 202:
+                intent= new Intent(this, SingleCommonTask.class);
+                bundle=new Bundle();
+                bundle.putInt("CTaskID",CTaskid.get(2));
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
             case R.id.CTR1:
+                intent= new Intent(this, SingleCommonTask.class);
+                bundle=new Bundle();
+                bundle.putInt("CTaskID", CTaskid.get(0));
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
-
+//            case R.id.Cmore:
+//                intent= new Intent(this, AllCommon.class);
+//                bundle= new Bundle();
+//                bundle.putString("account", accountName);
+//                intent.putExtras(bundle);
+//                startActivity(intent);
+//                break;
         }
 
 

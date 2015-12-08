@@ -22,15 +22,17 @@
             android:text="All My Private Task" />
 
 
-        <ListView
+        <com.example.administrator.task.ListViewCompat
             android:id="@+id/Tasklist"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-
-            android:gravity="center">
-
-        </ListView>
+            android:layout_height="match_parent"
+            android:background="@color/themecolor"
+            android:cacheColorHint="#00000000"
+            android:divider="#dddbdb"
+            android:dividerHeight="1.0px"
+            android:drawSelectorOnTop="false"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none" />
 
 
         <TextView

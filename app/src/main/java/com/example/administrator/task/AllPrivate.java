@@ -6,17 +6,23 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.administrator.task.SlideView.OnSlideListener;
+
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -28,10 +34,21 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllPrivate extends ActionBarActivity {
+public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemClickListener, View.OnClickListener,
+        OnSlideListener {
     String accountName;
     private ListView listView;
     Context context = this;
+    private static final String TAG = "MainActivity";
+
+    private ListViewCompat mListView;
+
+    private List<MessageItem> mMessageItems = new ArrayList<MessageItem>();
+
+    private SlideView mLastSlideViewWithStatusOn;
+
+    final private ArrayList<String> PTask = new ArrayList<String>();
+    final ArrayList<Integer> PTaskID = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +73,7 @@ public class AllPrivate extends ActionBarActivity {
                     JSONObject jObject = new JSONObject(new String(response));
                     JSONArray PrivateTask;
                     JSONArray PrivateTaskID;
-                    ArrayList<String> PTask = new ArrayList<String>();
-                    final ArrayList<Integer> PTaskID = new ArrayList<Integer>();
+
                     PrivateTask = jObject.getJSONArray("pritaskname");
                     PrivateTaskID =jObject.getJSONArray("pritaskid");
                     System.out.println(PrivateTask.length());
@@ -67,43 +83,16 @@ public class AllPrivate extends ActionBarActivity {
                         PTaskID.add(PrivateTaskID.getInt(i));
                     }
 
-                    listView = (ListView)findViewById(R.id.Tasklist);
-                    listView.setAdapter(new ArrayAdapter<String>(AllPrivate.this, android.R.layout.simple_expandable_list_item_1, PTask));
-
-                    final SwipeDetector swipeDetector = new SwipeDetector();
-                    listView.setOnTouchListener(swipeDetector);
-
-
-                    AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-                                                long arg3) {
-                            if (swipeDetector.swipeDetected()) {
-                                if (swipeDetector.getAction() == SwipeDetector.Action.RL) {
-//                                    float x = 5/10;
-//                                    findViewById((int)arg3).setAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_fade_in));
+                    mListView = (ListViewCompat) findViewById(R.id.Tasklist);
+                    for (int i = 0; i < PrivateTask.length(); i++) {
+                        MessageItem item = new MessageItem();
+                        item.msg =PrivateTask.getString(i) ;
+                        mMessageItems.add(item);
+                    }
+                    mListView.setAdapter(new SlideAdapter(mMessageItems));
+                    mListView.setOnItemClickListener(AllPrivate.this);
 
 
-                                    Toast.makeText(context, "Right to left", Toast.LENGTH_SHORT).show();
-                                } if(swipeDetector.getAction() == SwipeDetector.Action.None){
-                                    Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show();
-                                }
-                                else {
-                                    Toast.makeText(context, "Else", Toast.LENGTH_SHORT).show();
-                                }
-                            }else{
-                                Toast.makeText(context, "Click", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(context, com.example.administrator.task.SinglePrivateTask.class);
-                                Bundle bundle=new Bundle();
-                                int P = position;
-                                bundle.putInt("PTaskID", PTaskID.get(P));
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                            }
-                        }
-                    };
-
-                    listView.setOnItemClickListener(listener);
 
                 } catch (JSONException j) {
                     System.out.println("JSON Error");
@@ -116,6 +105,134 @@ public class AllPrivate extends ActionBarActivity {
                 Log.e("ManagePage", "There was a problem in retrieving the url : " + e.toString());
             }
         });
+    }
+    private class SlideAdapter extends BaseAdapter {
+
+        private LayoutInflater mInflater;
+        private List<MessageItem> MessageItems = new ArrayList<MessageItem>();
+
+        SlideAdapter(List<MessageItem> MessageItems_) {
+            super();
+            this.MessageItems=MessageItems_;
+            this.mInflater = getLayoutInflater();
+        }
+
+        @Override
+        public int getCount() {
+            return this.MessageItems.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return this.MessageItems.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            SlideView slideView = (SlideView) convertView;
+            if (slideView == null) {
+                View itemView = this.mInflater.inflate(R.layout.list_item, null);
+
+                slideView = new SlideView(AllPrivate.this);
+                slideView.setContentView(itemView);
+
+                holder = new ViewHolder(slideView);
+                slideView.setOnSlideListener(AllPrivate.this);
+                slideView.setTag(holder);
+            } else {
+                holder = (ViewHolder) slideView.getTag();
+            }
+            MessageItem item = this.MessageItems.get(position);
+            item.slideView = slideView;
+            item.slideView.shrink();
+
+//            holder.icon.setImageResource(item.iconRes);
+//            holder.title.setText(item.title);
+            holder.msg.setText(item.msg);
+//            holder.time.setText(item.time);
+            holder.deleteHolder.setOnClickListener(AllPrivate.this);
+            holder.finishHolder.setOnClickListener(AllPrivate.this);
+
+            return slideView;
+        }
+
+    }
+
+    public class MessageItem {
+        //        public int iconRes;
+//        public String title;
+        public String msg;
+//        public String time;
+        public SlideView slideView;
+    }
+
+    private static class ViewHolder {
+        public ImageView icon;
+        public TextView title;
+        public TextView msg;
+        public TextView time;
+        public ViewGroup deleteHolder;
+        public ViewGroup finishHolder;
+
+        ViewHolder(View view) {
+//            icon = (ImageView) view.findViewById(R.id.icon);
+//            title = (TextView) view.findViewById(R.id.title);
+            msg = (TextView) view.findViewById(R.id.msg);
+//            time = (TextView) view.findViewById(R.id.time);
+            deleteHolder = (ViewGroup)view.findViewById(R.id.holder2);
+            finishHolder =  (ViewGroup)view.findViewById(R.id.holder1);
+
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+        try {
+            Thread.sleep(500);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        if(!mListView.isScroll){
+            Log.e(TAG, "onItemClick position=" + position);
+            Toast.makeText(context, "click", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(context, com.example.administrator.task.SinglePrivateTask.class);
+            Bundle bundle=new Bundle();
+            int P = position;
+            bundle.putInt("PTaskID", PTaskID.get(P));
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+
+    }
+
+    @Override
+    public void onSlide(View view, int status) {
+        if (mLastSlideViewWithStatusOn != null && mLastSlideViewWithStatusOn != view) {
+            mLastSlideViewWithStatusOn.shrink();
+        }
+
+        if (status == SLIDE_STATUS_ON) {
+            mLastSlideViewWithStatusOn = (SlideView) view;
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.holder2) {
+            Log.e(TAG, "onClick v=" + v);
+            Toast.makeText(context, "delete", Toast.LENGTH_SHORT).show();
+        }
+        else if (v.getId() == R.id.holder1){
+            Log.e(TAG, "onClick v=" + v);
+            Toast.makeText(context, "finish", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

@@ -16,4 +16,5 @@
     <string name="title_activity_all_private">AllPrivate</string>
     <string name="title_activity_single_private_task">SinglePrivateTask</string>
     <string name="title_activity_create_common_task">CreateCommonTask</string>
+    <string name="title_activity_single_common_task">SingleCommonTask</string>
 </resources>

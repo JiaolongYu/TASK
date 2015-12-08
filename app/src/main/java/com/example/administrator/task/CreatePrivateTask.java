@@ -1,5 +1,7 @@
 package com.example.administrator.task;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,8 +9,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,6 +32,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -37,10 +42,11 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
 
     String accountName;
     String PTaskName;
-    String PTaskDescription;
+    String PTaskDiscription;
     String PTaskDue;
     Integer PTaskID;
-//    String PTaskCreateTime;
+    Calendar c;
+    //    String PTaskCreateTime;
 //    Integer PTaskFinished;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +62,49 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
 
         Button mCreate = (Button)findViewById(R.id.createP);
         mCreate.setOnClickListener(this);
+//Time setting part==========================================
 
+        Button btn1 = (Button) findViewById(R.id.button1);
+        Button btn2 = (Button) findViewById(R.id.button2);
+        c = Calendar.getInstance();
 
+        btn1.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new DatePickerDialog(CreatePrivateTask.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                                  int dayOfMonth) {
+                                TextView text = (TextView) findViewById(R.id.taskdue);
+                                String tmp2 = String.valueOf(year)+"-"+String.valueOf(monthOfYear)+"-"+String.valueOf(dayOfMonth);
+                                text.setText(tmp2);
+                            }
+                        }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        btn2.setOnClickListener(new Button.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                new TimePickerDialog(CreatePrivateTask.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                // TODO Auto-generated method stub
+                                TextView text = (TextView) findViewById(R.id.taskdue);
+                                String tmp=String.valueOf(c.get(Calendar.YEAR))+"-"+String.valueOf(c.get(Calendar.MONTH))+"-"+String.valueOf(c.get(Calendar.DAY_OF_MONTH))+"-"+String.valueOf(hourOfDay)+":"+String.valueOf(minute);
+                                text.setText(tmp);
+                            }
+                        }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true).show();
+
+            }
+
+        });
 
     }
 
@@ -65,17 +112,17 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
     public void onClick(View v) {
         EditText TaskName =(EditText)findViewById(R.id.taskname);
         EditText TaskDue = (EditText)findViewById(R.id.taskdue);
-        EditText TaskDescription = (EditText)findViewById(R.id.taskdiscrip);
+        EditText TaskDiscription = (EditText)findViewById(R.id.taskdiscrip);
 
         PTaskName = TaskName.getText().toString();
         PTaskDue = TaskDue.getText().toString();
-        PTaskDescription = TaskDescription.getText().toString();
+        PTaskDiscription = TaskDiscription.getText().toString();
         PTaskID = (PTaskName+accountName).hashCode();
 
         RequestParams params = new RequestParams();
         params.put("taskname", PTaskName);
         params.put("creator", accountName);
-        params.put("description", PTaskDescription);
+        params.put("description", PTaskDiscription);
         params.put("due", PTaskDue);
         params.put("taskid",PTaskID);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -83,7 +130,7 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
             @Override
             public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] response) {
                 Log.w("async", "success!!!!");
-                Toast.makeText(context, "Create Successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Upload Successful", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -91,12 +138,6 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
                 Log.e("Posting_to_blob", "There was a problem in retrieving the url : " + e.toString());
             }
         });
-
-        try {
-            Thread.sleep(500);                 //1000 milliseconds is one second.
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
 
         Intent intent= new Intent(this, ManageActivity.class);
         Bundle bundle=new Bundle();
