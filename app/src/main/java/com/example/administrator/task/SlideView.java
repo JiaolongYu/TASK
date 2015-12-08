@@ -23,6 +23,8 @@ public class SlideView extends LinearLayout {
     private OnSlideListener mOnSlideListener;
 
     private int mHolderWidth = 120;
+    private int mStartX = 0;
+    private int mFinishX = 0;
 
     private int mLastX = 0;
     private int mLastY = 0;
@@ -93,6 +95,7 @@ public class SlideView extends LinearLayout {
                 if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
                 }
+                mStartX = x;
                 if (mOnSlideListener != null) {
                     mOnSlideListener.onSlide(this,
                             OnSlideListener.SLIDE_STATUS_START_SCROLL);
@@ -131,6 +134,10 @@ public class SlideView extends LinearLayout {
                 this.smoothScrollTo(newScrollX, 0);
                 if(newScrollX ==mHolderWidth){
                     result =true;
+                }
+                mFinishX = x;
+                if(Math.abs(mFinishX-mStartX)>3){
+                    result=true;
                 }
                 if (mOnSlideListener != null) {
                     mOnSlideListener.onSlide(this,

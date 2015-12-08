@@ -1,6 +1,6 @@
 package com.example.administrator.task;
 
-//import com.example.administrator.task.wechatslide.MessageItem;
+//import com.example.administrator.task.MessageItem;
 
 import android.content.Context;
 import android.util.AttributeSet;
