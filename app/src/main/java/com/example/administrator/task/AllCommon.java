@@ -170,14 +170,14 @@ public class AllCommon extends ActionBarActivity implements AdapterView.OnItemCl
 
     }
 
-    public class MessageItem {
-        //        public int iconRes;
-//        public String title;
-        public String msg;
-        public String id;
-        //        public String time;
-        public SlideView slideView;
-    }
+//    public class MessageItem {
+//        //        public int iconRes;
+////        public String title;
+//        public String msg;
+//        public String id;
+//        //        public String time;
+//        public SlideView slideView;
+//    }
 
     private static class ViewHolder {
         public ImageView icon;

@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.task.SlideView.OnSlideListener;
+import com.example.administrator.task.MessageItem;
+
 
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -169,14 +171,14 @@ public class AllPrivate extends ActionBarActivity implements AdapterView.OnItemC
 
     }
 
-    public class MessageItem {
-        //        public int iconRes;
-//        public String title;
-        public String msg;
-        public String id;
-//        public String time;
-        public SlideView slideView;
-    }
+//    public class MessageItem {
+//        //        public int iconRes;
+////        public String title;
+//        public String msg;
+//        public String id;
+////        public String time;
+//        public SlideView slideView;
+//    }
 
     private static class ViewHolder {
         public ImageView icon;
