@@ -128,6 +128,7 @@ public class SlideView extends LinearLayout {
             }
             case MotionEvent.ACTION_UP: {
                 int newScrollX = 0;
+                System.out.println(scrollX);
                 if (scrollX - mHolderWidth * 0.75 > 0) {
                     newScrollX = mHolderWidth;
                 }

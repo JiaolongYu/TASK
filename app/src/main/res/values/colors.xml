@@ -12,5 +12,6 @@
     <color name="blue">#05cbf7</color>
     <color name="red">#c41f12</color>
     <color name="yellow_grey">#ccb465</color>
+    <color name="light_grey">#fedde2e1</color>
     <color name="bar">#225370</color>
 </resources>

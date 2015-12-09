@@ -213,6 +213,7 @@ public class AllCommon extends ActionBarActivity implements AdapterView.OnItemCl
             Bundle bundle=new Bundle();
             int P = position;
             bundle.putInt("PTaskID", PTaskID.get(P));
+            bundle.putString("Account",accountName);
             intent.putExtras(bundle);
             startActivity(intent);
         }

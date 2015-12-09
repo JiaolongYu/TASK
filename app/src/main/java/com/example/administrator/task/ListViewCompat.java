@@ -60,12 +60,8 @@ public class ListViewCompat extends ListView {
         }
 
         if (mFocusedItemView != null) {
-//            mFocusedItemView.onRequireTouchEvent(event);
             isScroll=mFocusedItemView.onRequireTouchEvent(event);
             System.out.println("isScroll?:"+isScroll);
-//            if (isScroll) {
-//                return true;
-//            }
         }
 
         return super.onTouchEvent(event);

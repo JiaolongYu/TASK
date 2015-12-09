@@ -63,7 +63,7 @@
             android:layout_marginBottom="20dip"
             android:paddingRight="20dp"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:text="Deadline:" />
 
         <TextView
@@ -72,7 +72,7 @@
             android:id="@+id/ctaskdue"
             android:layout_marginBottom="20dip"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:text="due" />
 
     </LinearLayout>
@@ -89,7 +89,7 @@
             android:layout_marginBottom="20dip"
             android:paddingRight="20dp"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:text="Description:" />
 
         <TextView
@@ -98,7 +98,7 @@
             android:id="@+id/ctaskdescript"
             android:layout_marginBottom="20dip"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:text="description" />
 
     </LinearLayout>
@@ -115,7 +115,7 @@
             android:layout_marginBottom="20dip"
             android:paddingRight="20dp"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:text="Create time:" />
 
         <TextView
@@ -124,9 +124,78 @@
             android:id="@+id/ctaskcreatetime"
             android:layout_marginBottom="20dip"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:text="create time" />
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dip"
+        tools:context=".MainActivity">
+
+
+
+        <ImageView
+            android:id="@+id/show_comments"
+            android:layout_width="35dp"
+            android:layout_height="34dp"
+            android:clickable="true"
+            android:tag="plus"
+            android:src="@drawable/ic_add_box_white_18dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:text="Comments" />
+
+        <TextView
+            android:id="@+id/comment_nums"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingRight="20dp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:text="(0)" />
+
+        <ImageView
+            android:id="@+id/add_comment"
+            android:layout_width="35dp"
+            android:layout_height="34dp"
+            android:clickable="true"
+            android:src="@drawable/ic_comment_white_18dp"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        android:background="@color/light_grey"
+        tools:context=".MainActivity"/>
+
+    <LinearLayout
+        android:id="@+id/comment_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/light_grey"
+        tools:context=".MainActivity"/>
+
+    <ListView
+        android:id="@+id/comments"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"></ListView>
 
 </LinearLayout>

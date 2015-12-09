@@ -238,6 +238,7 @@ public class MainActivity extends ActionBarActivity implements
     ImageView imageView = null;
     private static boolean login_msg_shown = false;
     public String email = null;
+    public String username = null;
 
     /* onConnected is called when our Activity successfully connects to Google
      * Play services.  onConnected indicates that an account was selected on the
@@ -259,6 +260,8 @@ public class MainActivity extends ActionBarActivity implements
 
         // Retrieve some profile information to personalize our app for the user.
         final Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+        username = currentUser.getDisplayName();
+        System.out.println(username);
         email = Plus.AccountApi.getAccountName(mGoogleApiClient);
         System.out.println(email);
         // Indicate that the sign in process is complete.
@@ -268,7 +271,7 @@ public class MainActivity extends ActionBarActivity implements
         mStatus.setText(email + " is currently Signed In");
         Intent intent= new Intent(this, ManageActivity.class);
         Bundle bundle=new Bundle();
-        bundle.putString("account", email);
+        bundle.putString("account", username);
         intent.putExtras(bundle);
         startActivity(intent);
 

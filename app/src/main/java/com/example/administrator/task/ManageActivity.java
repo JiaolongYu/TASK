@@ -79,7 +79,7 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
 
         Intent intentstream = getIntent();
-        accountName ="julorwowo@gmail.com";
+        accountName =intentstream.getStringExtra("account");
 //        TextView mDebug = (TextView) findViewById(R.id.managedebug);
 //        mDebug.setText(accountName);
 //        System.out.println("account:"+accountName);
@@ -293,6 +293,7 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 intent= new Intent(this, SingleCommonTask.class);
                 bundle=new Bundle();
                 bundle.putInt("CTaskID",CTaskid.get(1));
+                bundle.putString("Account",accountName);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
@@ -300,6 +301,7 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 intent= new Intent(this, SingleCommonTask.class);
                 bundle=new Bundle();
                 bundle.putInt("CTaskID",CTaskid.get(2));
+                bundle.putString("Account", accountName);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
@@ -307,6 +309,7 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 intent= new Intent(this, SingleCommonTask.class);
                 bundle=new Bundle();
                 bundle.putInt("CTaskID", CTaskid.get(0));
+                bundle.putString("Account",accountName);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
