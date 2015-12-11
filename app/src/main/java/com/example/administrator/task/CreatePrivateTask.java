@@ -139,6 +139,12 @@ public class CreatePrivateTask extends ActionBarActivity implements View.OnClick
             }
         });
 
+        try {
+            Thread.sleep(500);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+
         Intent intent= new Intent(this, ManageActivity.class);
         Bundle bundle=new Bundle();
         bundle.putString("account", accountName);

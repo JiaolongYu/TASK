@@ -14,40 +14,47 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:context=".MainActivity">
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:id="@+id/ctaskname"
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/ctaskname"
+                android:layout_height="0px"
+                android:layout_weight="4"
+                android:layout_marginBottom="3dip"
+                android:textSize="30sp"
+                android:textColor="@color/orange"
+                android:text="Task Name" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:id="@+id/ctaskcreatetime"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:text="create time" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="0px"
+            android:id="@+id/manage_common"
             android:layout_weight="1"
+            android:tag="notjoin"
+            android:background="@color/themecolor"
+            android:layout_centerInParent="true"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dip"
-            android:textSize="40sp"
-            android:textColor="@color/orange"
-            android:text="Task Name" />
+            android:clickable="true"
+            android:src="@drawable/ic_star_border_white_18dp"
+            />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:paddingRight="2dp"
-            android:paddingLeft="2dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:layout_alignParentRight="true"
-            tools:context=".MainActivity">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_weight="3"
-                android:background="@color/themecolor"
-                android:layout_centerInParent="true"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:src="@drawable/ic_edit_white_18dp"
-                />
-        </RelativeLayout>
 
     </LinearLayout>
 
@@ -60,17 +67,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dip"
             android:paddingRight="20dp"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="23sp"
             android:text="Deadline:" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ctaskdue"
-            android:layout_marginBottom="20dip"
+            android:layout_marginBottom="5dip"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:text="due" />
@@ -84,13 +90,14 @@
         tools:context=".MainActivity">
 
         <TextView
+            android:id="@+id/collapseDes"
+            android:tag="show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dip"
             android:paddingRight="20dp"
             android:textColor="@color/white"
-            android:textSize="25sp"
-            android:text="Description:" />
+            android:textSize="23sp"
+            android:text="— Description:" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -100,32 +107,6 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:text="description" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:context=".MainActivity">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dip"
-            android:paddingRight="20dp"
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:text="Create time:" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ctaskcreatetime"
-            android:layout_marginBottom="20dip"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:text="create time" />
 
     </LinearLayout>
 
@@ -189,13 +170,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/light_grey"
+        android:background="@color/themecolor"
         tools:context=".MainActivity"/>
 
-    <ListView
+    <ExpandableListView
         android:id="@+id/comments"
         android:layout_width="match_parent"
         android:visibility="gone"
-        android:layout_height="wrap_content"></ListView>
+        android:groupIndicator="@null"
+        android:layout_height="wrap_content"></ExpandableListView>
 
 </LinearLayout>

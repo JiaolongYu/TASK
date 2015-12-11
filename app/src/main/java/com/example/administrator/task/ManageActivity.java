@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -54,6 +55,7 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
     private GoogleApiClient mGoogleApiClient;
     boolean mSignInClicked;
     Context context = this;
+
     ArrayList<String> PTask = new ArrayList<String>();
     ArrayList<Integer> PTaskid =new ArrayList<Integer>();
     ArrayList<String> CTask = new ArrayList<String>();
@@ -88,8 +90,8 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
             mDebug.setText(accountName);
             Button mSignout = (Button) findViewById(R.id.manage_sign_out);
             Button mCreate = (Button) findViewById(R.id.CreateTask);
-            TextView mMore = (TextView) findViewById(R.id.Pmore);
-            TextView mCMore = (TextView) findViewById(R.id.Cmore);
+            ImageView mMore = (ImageView) findViewById(R.id.Pmore);
+            ImageView mCMore = (ImageView) findViewById(R.id.Cmore);
             final TableRow PTRR = (TableRow)findViewById(R.id.PTR1);
             final TableRow CTRR = (TableRow)findViewById(R.id.CTR1);
             PTRR.setOnClickListener(ManageActivity.this);
@@ -120,12 +122,13 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                         JSONArray PrivateTask = new JSONArray();
                         JSONArray PrivateTaskId = new JSONArray();
 
-                        System.out.println(jObject.isNull("taskname"));
+
+                        System.out.println(jObject.isNull("jointaskname"));
                         System.out.println(jObject.isNull("pritaskname"));
 
-                        if(!jObject.isNull("taskname")){
-                            CommonTask = jObject.getJSONArray("taskname");
-                            CommonTaskId =jObject.getJSONArray("taskid");
+                        if(!jObject.isNull("jointaskname")){
+                            CommonTask = jObject.getJSONArray("jointaskname");
+                            CommonTaskId =jObject.getJSONArray("jointaskid");
                         }
 
                         if(!jObject.isNull("pritaskname")) {
@@ -292,8 +295,9 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
             case 201:
                 intent= new Intent(this, SingleCommonTask.class);
                 bundle=new Bundle();
-                bundle.putInt("CTaskID",CTaskid.get(1));
-                bundle.putString("Account",accountName);
+                bundle.putInt("CTaskID", CTaskid.get(1));
+                bundle.putString("Account", accountName);
+                bundle.putBoolean("hasJoined", true);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
@@ -302,6 +306,7 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 bundle=new Bundle();
                 bundle.putInt("CTaskID",CTaskid.get(2));
                 bundle.putString("Account", accountName);
+                bundle.putBoolean("hasJoined", true);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
@@ -309,7 +314,8 @@ public class ManageActivity extends ActionBarActivity implements ResultCallback<
                 intent= new Intent(this, SingleCommonTask.class);
                 bundle=new Bundle();
                 bundle.putInt("CTaskID", CTaskid.get(0));
-                bundle.putString("Account",accountName);
+                bundle.putString("Account", accountName);
+                bundle.putBoolean("hasJoined",true);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;

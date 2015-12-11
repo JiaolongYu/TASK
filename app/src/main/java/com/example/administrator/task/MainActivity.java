@@ -213,6 +213,7 @@ public class MainActivity extends ActionBarActivity implements
                     mGoogleApiClient.disconnect();
                     mGoogleApiClient.connect();
                     email = null;
+
                     Toast.makeText(getApplicationContext(), "You are now signed out", Toast.LENGTH_SHORT).show();
                     login_msg_shown = false;
                     break;
@@ -239,6 +240,7 @@ public class MainActivity extends ActionBarActivity implements
     private static boolean login_msg_shown = false;
     public String email = null;
     public String username = null;
+    public String userimage = null;
 
     /* onConnected is called when our Activity successfully connects to Google
      * Play services.  onConnected indicates that an account was selected on the
@@ -261,6 +263,7 @@ public class MainActivity extends ActionBarActivity implements
         // Retrieve some profile information to personalize our app for the user.
         final Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
         username = currentUser.getDisplayName();
+//        userimage = currentUser.getImage();
         System.out.println(username);
         email = Plus.AccountApi.getAccountName(mGoogleApiClient);
         System.out.println(email);

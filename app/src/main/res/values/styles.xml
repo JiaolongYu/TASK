@@ -16,5 +16,11 @@
         <!--<item name="android:background">#045864</item>-->
     </style>
 
+    <style name="FullHeightDialog" parent="android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:layout_width">@dimen/activity_horizontal_margin</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 
 </resources>

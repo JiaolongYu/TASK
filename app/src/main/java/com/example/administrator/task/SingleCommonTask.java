@@ -1,24 +1,37 @@
 package com.example.administrator.task;
 
 import com.example.administrator.task.myComment;
-import com.example.administrator.task.CommentAdapter;
+//import com.example.administrator.task.CommentAdapter;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -46,6 +59,7 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
     ArrayList<myComment> mComments = new ArrayList<myComment>();
     ArrayList<Integer> CommentIds;
     Context context = this;
+    Activity activity = this;
 
 
     @Override
@@ -58,8 +72,11 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
         accountName = intent.getStringExtra("Account");
         System.out.println(TaskId);
 
+        TextView Description = (TextView) findViewById(R.id.collapseDes);
+
         ImageView AddComment = (ImageView) findViewById(R.id.add_comment);
         ImageView ShowComment = (ImageView) findViewById(R.id.show_comments);
+        Description.setOnClickListener(this);
         AddComment.setOnClickListener(this);
         ShowComment.setOnClickListener(this);
 
@@ -77,6 +94,7 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                     String CTaskdue;
                     String CTaskdescription;
                     String CTaskcreatetime;
+                    String Ccreator;
                     ArrayList<String> CCCC= new ArrayList<String>();
 
                     JSONArray JComments =jObject.getJSONArray("comment_content");
@@ -88,7 +106,7 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                     for(int i = 0; i< JComments.length();i++){
                         String Content = JComments.getString(i);
                         String Creator = JCommentcreators.getString(i);
-                        String CommentTime = JCommenttimes.getString(i).substring(0,16);
+                        String CommentTime = JCommenttimes.getString(i);
                         int CommentId =JCommentids.getInt(i);
                         final myComment oneComment = new myComment(Content,CommentId,Creator,CommentTime);
 
@@ -113,7 +131,7 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                                         int RCommentid = JReplyCommentids.getInt(i);
                                         String Replyto = JReplytos.getString(i);
                                         String RCreator = JReplyCreator.getString(i);
-                                        String Replytime = JReplyTime.getString(i).substring(0,16);
+                                        String Replytime = JReplyTime.getString(i);
                                         Reply oneReply = new Reply(RCommentid,RContent,RCreator,Replytime,Replyto);
                                         oneComment.Replies.add(oneReply);
                                     }
@@ -136,28 +154,34 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                     }
                     System.out.println(mComments.size());
                     TextView commentnumber = (TextView) findViewById(R.id.comment_nums);
-                    commentnumber.setText("("+mComments.size()+")");
+                    commentnumber.setText("(" + mComments.size() + ")");
 
 //                    ArrayAdapter<String> adp =new ArrayAdapter<String>(context,R.layout.testview,CCCC);
-                    ListView CommentList = (ListView)findViewById(R.id.comments);
+                    ExpandableListView CommentList = (ExpandableListView)findViewById(R.id.comments);
 
                     for(int i = 0; i < mComments.size();i++){
-                        System.out.println(mComments.get(i).Content+" has "+mComments.get(i).Replies.size());
+                        System.out.println(mComments.get(i).Content + " has " + mComments.get(i).Replies.size());
                     }
 
-                    CommentAdapter adapter = new CommentAdapter(context,mComments);
+                    ExpendableCommentAdapter adapter = new ExpendableCommentAdapter(activity,mComments);
                     CommentList.setAdapter(adapter);
-//                        ArrayList<String> CTask = new ArrayList<String>();
-//                        ArrayList<String> PTask;
-//                        CommonTask = jObject.getJSONArray("taskname");
-//                    System.out.println("here before Ptaskname");
+                    CommentList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                        @Override
+                        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                            // Doing nothing
+                            return true;
+                        }
+                    });
                     CTaskname = jObject.getJSONArray("taskname").getString(0);
-//                    System.out.println("here after Ptaskname");
                     CTaskdue = jObject.getJSONArray("due").getString(0);
                     CTaskdescription = jObject.getJSONArray("description").getString(0);
-//                    System.out.println("here after Ptaskdescription");
                     CTaskcreatetime = jObject.getJSONArray("create_time").getString(0);
-//                    System.out.println("here after createtime");
+                    Ccreator = jObject.getJSONArray("creator").getString(0);
+                    ImageView ManageCommonTask= (ImageView)findViewById(R.id.manage_common);
+                    if(Ccreator.equals(accountName)){
+                        ManageCommonTask.setImageResource(R.drawable.ic_edit_white_18dp);
+                        ManageCommonTask.setTag("edit");
+                    }
                     TextView ctaskname = (TextView) findViewById(R.id.ctaskname);
                     TextView ctaskdue = (TextView) findViewById(R.id.ctaskdue);
                     TextView ctaskdescription = (TextView) findViewById(R.id.ctaskdescript);
@@ -165,7 +189,7 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                     ctaskname.setText(CTaskname);
                     ctaskdue.setText(CTaskdue);
                     ctaskdescription.setText(CTaskdescription);
-                    ctaskcreatetime.setText(CTaskcreatetime);
+                    ctaskcreatetime.setText("Created by "+Ccreator+" at "+CTaskcreatetime);
 
                     CommentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         public void onItemClick(AdapterView<?> parent, View view,
@@ -202,6 +226,8 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                 EditText CommentEdit = new EditText(this);
                 CommentEdit.setId(View.generateViewId());
                 ComTextId = CommentEdit.getId();
+                CommentEdit.setBackground(getResources().getDrawable(R.drawable.round_edit));
+                CommentEdit.setPadding(10,0,0,0);
                 LinearLayout split = new LinearLayout(this);
                 Button ComSubmit =new Button(this);
                 ComSubmit.setText("Submit");
@@ -214,18 +240,16 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                 GradientDrawable background = (GradientDrawable) ComSubmit.getBackground();
                 background.setColor(Color.WHITE);
                 ComSubmit.setTextColor(getResources().getColor(R.color.themecolor));
-//                    Cancel.setText("Cancel");
-//                    Cancel.setPadding(0, 0, 0, 0);
-//                    Cancel.setBackgroundResource(R.drawable.mybutton);
-//                    Cancel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-////                    Cancel.setBackgroundColor(getResources().getColor(R.color.white));
-//                    Cancel.setTextColor(getResources().getColor(R.color.themecolor));
-                CommentDialog.addView(CommentEdit, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 7));
+                CommentDialog.addView(CommentEdit, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100, 7));
                 CommentDialog.addView(ComSubmit, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 100, 1));
                 CommentDialog.addView(split, new LinearLayout.LayoutParams(8, 100));
-//                    CommentDialog.addView(Cancel,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 100,1));
                 hasEdit = true;
+                if(CommentEdit.requestFocus()) {
+                    InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.toggleSoftInputFromWindow(split.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+                }
             }
+
         }else if(v.getId()==ComSubmitId){
             EditText CommentText = (EditText)findViewById(ComTextId);
             String Comment = CommentText.getText().toString();
@@ -240,6 +264,7 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                 @Override
                 public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] response) {
                     Log.w("async", "success!!!!");
+//                    Intent intent =
                     Toast.makeText(context, "Submit Successful", Toast.LENGTH_SHORT).show();
                 }
 
@@ -255,8 +280,9 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
             LinearLayout replydialog = (LinearLayout) child.findViewById(R.id.reply_dialog);
             if(replydialog.getTag().equals("noview")){
                 EditText ReplyEdit = new EditText(context);
+                ReplyEdit.setPadding(10,0,0,0);
                 ReplyEdit.setId(View.generateViewId());
-
+                ReplyEdit.setBackground(getResources().getDrawable(R.drawable.round_edit));
                 ReplyTextId = ReplyEdit.getId();
                 LinearLayout split = new LinearLayout(this);
                 Button ReplySubmit =new Button(this);
@@ -270,28 +296,18 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                 GradientDrawable background = (GradientDrawable) ReplySubmit.getBackground();
                 background.setColor(Color.WHITE);
                 ReplySubmit.setTextColor(getResources().getColor(R.color.themecolor));
-//                    Cancel.setText("Cancel");
-//                    Cancel.setPadding(0, 0, 0, 0);
-//                    Cancel.setBackgroundResource(R.drawable.mybutton);
-//                    Cancel.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
-////                    Cancel.setBackgroundColor(getResources().getColor(R.color.white));
-//                    Cancel.setTextColor(getResources().getColor(R.color.themecolor));
-                replydialog.addView(ReplyEdit, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 7));
+                replydialog.addView(ReplyEdit, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100, 7));
                 replydialog.addView(ReplySubmit, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 100, 1));
                 replydialog.addView(split, new LinearLayout.LayoutParams(8, 100));
                 replydialog.setTag("hasview");
+                if(ReplyEdit.requestFocus()) {
+                    InputMethodManager inputMethodManager=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.toggleSoftInputFromWindow(split.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+                }
             }else{
                 replydialog.removeAllViews();
                 replydialog.setTag("noview");
             }
-
-//            LinearLayout replydiaglog2 = (LinearLayout) child.get
-//
-//            RequestParams params = new RequestParams();
-//            params.put("commentid", iComment.Id);
-
-
-
             Toast.makeText(context, "Reply", Toast.LENGTH_SHORT).show();
         }else if(v.getId() == ReplySubmitId){
             EditText ReplyText = (EditText)findViewById(ReplyTextId);
@@ -333,7 +349,17 @@ public class SingleCommonTask extends ActionBarActivity implements View.OnClickL
                 CommentList.setVisibility(View.VISIBLE);
             }
 
+        }else if(v.getId() == R.id.collapseDes){
+            TextView descontent = (TextView)findViewById(R.id.ctaskdescript);
+            if(v.getTag().equals("show")){
+                ((TextView)v).setText("+ Description:");
+                v.setTag("notshow");
+                descontent.setVisibility(View.GONE);
+            }else{
+                ((TextView)v).setText("— Description:");
+                v.setTag("show");
+                descontent.setVisibility(View.VISIBLE);
+            }
         }
     }
-
 }
